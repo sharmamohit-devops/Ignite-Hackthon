@@ -1,0 +1,113 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    --background: 210 20% 97%;
+    --foreground: 210 11% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 210 11% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 210 11% 15%;
+
+    --primary: 196 79% 22%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 210 11% 15%;
+
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
+
+    --accent: 162 73% 46%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 354 70% 54%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 196 79% 22%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 196 79% 22%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 162 73% 46%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 196 79% 18%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 196 79% 18%;
+    --sidebar-ring: 162 73% 46%;
+  }
+
+  .dark {
+    --background: 210 11% 15%;
+    --foreground: 0 0% 100%;
+
+    --card: 210 11% 20%;
+    --card-foreground: 0 0% 100%;
+
+    --popover: 210 11% 20%;
+    --popover-foreground: 0 0% 100%;
+
+    --primary: 162 73% 46%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 210 11% 25%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 210 11% 25%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 162 73% 46%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 354 70% 54%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 210 11% 25%;
+    --input: 210 11% 25%;
+    --ring: 162 73% 46%;
+    
+    --sidebar-background: 210 11% 20%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 162 73% 46%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 210 11% 25%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 210 11% 25%;
+    --sidebar-ring: 162 73% 46%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
+  }
+}
+
+@layer utilities {
+  .hover-lift {
+    @apply transition-all duration-200 hover:-translate-y-1 hover:shadow-lg;
+  }
+
+  .card-shadow {
+    @apply shadow-sm hover:shadow-md transition-shadow duration-200;
+  }
+}
