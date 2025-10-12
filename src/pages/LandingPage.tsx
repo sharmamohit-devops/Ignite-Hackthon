@@ -173,10 +173,10 @@ const LandingPage = () => {
               <div className="group w-auto sm:w-auto">
                 <Button 
                   size="lg"
-                  className="bg-yellow-100 text-blue-900 hover:bg-yellow-200 font-semibold text-base sm:text-lg px-4 sm:px-10 py-6 sm:py-7 h-auto shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all duration-300 hover:shadow-[-4px_-4px_0px_0px_rgba(0,0,0,1)] w-auto"
+                  className="bg-yellow-100 text-blue-900 hover:bg-yellow-200 font-semibold text-base sm:text-lg px-4 sm:px-10 py-6 sm:py-7 h-auto shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transition-all duration-500 hover:shadow-[-8px_-8px_0px_0px_rgba(0,0,0,1)] w-auto"
                   onClick={() => navigate("/login")}
                 >
-                  Start Free Trial
+                  Explore Communites
                 </Button>
               </div>
               <div className="group inline-flex items-center w-auto sm:w-auto justify-center">

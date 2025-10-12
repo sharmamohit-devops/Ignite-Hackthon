@@ -16,6 +16,7 @@ import AllComplaints from "./pages/secretary/AllComplaints";
 import ComplaintHeatmap from "./pages/secretary/ComplaintHeatmap";
 import AreaHeadDashboard from "./pages/areahead/AreaHeadDashboard";
 import CommunityRequests from "./pages/areahead/CommunityRequests";
+import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -36,6 +37,7 @@ const App = () => (
           <Route path="/complaints" element={<Complaints />} />
           <Route path="/directory" element={<Directory />} />
           <Route path="/polls" element={<Polls />} />
+          <Route path="/settings" element={<Settings />} />
           
           {/* Secretary Routes */}
           <Route path="/secretary/dashboard" element={<SecretaryDashboard />} />

@@ -1,24 +1,22 @@
+import { useState } from "react";
 import { Layout } from "@/components/Layout";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ShoppingCart, Share2, Repeat, Users, Building, Shield, ArrowLeft } from "lucide-react";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { ShoppingCart, Share2, Repeat, Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { ChatBot } from "@/components/ChatBot";
 
 const CommunityHub = () => {
   const navigate = useNavigate();
 
-  const gridPattern = `data:image/svg+xml,%3Csvg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" stroke="%23ffffff" stroke-width="0.5" stroke-opacity="0.05"%3E%3Cline x1="0" y1="0" x2="32" y2="0"/%3E%3Cline x1="0" y1="8" x2="32" y2="8"/%3E%3Cline x1="0" y1="16" x2="32" y2="16"/%3E%3Cline x1="0" y1="24" x2="32" y2="24"/%3E%3Cline x1="0" y1="32" x2="32" y2="32"/%3E%3Cline x1="0" y1="0" x2="0" y2="32"/%3E%3Cline x1="8" y1="0" x2="8" y2="32"/%3E%3Cline x1="16" y1="0" x2="16" y2="32"/%3E%3Cline x1="24" y1="0" x2="24" y2="32"/%3E%3Cline x1="32" y1="0" x2="32" y2="32"/%3E%3C/g%3E%3C/svg%3E`;
-
-  const gridStyle = {
-    backgroundImage: `url(${gridPattern})`,
-    backgroundRepeat: 'repeat'
-  };
-
-  // Indian-themed Buy & Sell data
-  const buyAndSell = [
+  const [buySellItems, setBuySellItems] = useState([
     {
       id: 1,
       imageUrl: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop",
@@ -46,10 +44,9 @@ const CommunityHub = () => {
       seller: "Amit Patel",
       postedOn: "5 days ago"
     }
-  ];
+  ]);
 
-  // Indian-themed Resource Sharing data
-  const resourceSharing = [
+  const [resourceItems, setResourceItems] = useState([
     {
       id: 1,
       title: "Lending Pressure Cooker",
@@ -74,10 +71,9 @@ const CommunityHub = () => {
       provider: "Sunita Reddy",
       responses: "1"
     }
-  ];
+  ]);
 
-  // Indian-themed Skill Exchange data
-  const skillExchange = [
+  const [skillItems, setSkillItems] = useState([
     {
       id: 1,
       title: "Yoga & Pranayama Classes",
@@ -102,17 +98,156 @@ const CommunityHub = () => {
       seeking: "Mobile app troubleshooting",
       responses: "3"
     }
-  ];
+  ]);
+
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [postType, setPostType] = useState("buy-sell");
+  const [newPost, setNewPost] = useState<any>({});
+
+  const handleInputChange = (field: string, value: string) => {
+    setNewPost((prev: any) => ({ ...prev, [field]: value }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const newPostData = {
+      id: Math.random(),
+      ...newPost,
+      postedOn: "Just now",
+      seller: "Current User",
+      provider: "Current User",
+      offerer: "Current User",
+      requester: "Current User",
+      responses: "0",
+    };
+
+    if (postType === "buy-sell") {
+      setBuySellItems([newPostData, ...buySellItems]);
+    } else if (postType === "resources") {
+      setResourceItems([newPostData, ...resourceItems]);
+    } else if (postType === "skills") {
+      setSkillItems([newPostData, ...skillItems]);
+    }
+
+    setNewPost({});
+    setDialogOpen(false);
+  };
+
+  const gridPattern = `data:image/svg+xml,%3Csvg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" stroke="%23ffffff" stroke-width="0.5" stroke-opacity="0.05"%3E%3Cline x1="0" y1="0" x2="32" y2="0"/%3E%3Cline x1="0" y1="8" x2="32" y2="8"/%3E%3Cline x1="0" y1="16" x2="32" y2="16"/%3E%3Cline x1="0" y1="24" x2="32" y2="24"/%3E%3Cline x1="0" y1="32" x2="32" y2="32"/%3E%3Cline x1="0" y1="0" x2="0" y2="32"/%3E%3Cline x1="8" y1="0" x2="8" y2="32"/%3E%3Cline x1="16" y1="0" x2="16" y2="32"/%3E%3Cline x1="24" y1="0" x2="24" y2="32"/%3E%3Cline x1="32" y1="0" x2="32" y2="32"/%3E%3C/g%3E%3C/svg%3E`;
+
+  const gridStyle = {
+    backgroundImage: `url(${gridPattern})`,
+    backgroundRepeat: 'repeat'
+  };
 
   return (
     <Layout userRole="resident">
       <div className="min-h-screen bg-stone-50" style={gridStyle}>
         <div className="container mx-auto px-4 py-12 max-w-6xl space-y-8">
-          <div className="text-center mb-8">
-            <h1 className="text-4xl md:text-5xl font-heading font-bold text-blue-900 mb-4">Community Hub</h1>
-            <p className="text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
-              Buy, sell, share resources, and exchange skills with your neighbors across India
-            </p>
+          <div className="flex items-center justify-between mb-8">
+            <div>
+              <h1 className="text-4xl md:text-5xl font-heading font-bold text-blue-900 mb-2">Community Hub</h1>
+              <p className="text-xl text-gray-700 leading-relaxed">
+                Buy, sell, share resources, and exchange skills with your neighbors.
+              </p>
+            </div>
+            <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+              <DialogTrigger asChild>
+                <Button className="gap-2">
+                  <Plus className="h-4 w-4" />
+                  Create Post
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[525px]">
+                <DialogHeader>
+                  <DialogTitle>Create a New Post</DialogTitle>
+                  <DialogDescription>
+                    Share something with your community. Select the post type and fill in the details.
+                  </DialogDescription>
+                </DialogHeader>
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div>
+                    <Label htmlFor="post-type">Post Type</Label>
+                    <Select onValueChange={setPostType} defaultValue={postType}>
+                      <SelectTrigger id="post-type">
+                        <SelectValue placeholder="Select post type" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="buy-sell">Buy & Sell</SelectItem>
+                        <SelectItem value="resources">Resource Sharing</SelectItem>
+                        <SelectItem value="skills">Skill Exchange</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  {postType === 'buy-sell' && (
+                    <>
+                      <div>
+                        <Label htmlFor="title">Item Title</Label>
+                        <Input id="title" placeholder="e.g., Handwoven Banarasi Saree" required onChange={(e) => handleInputChange("title", e.target.value)} />
+                      </div>
+                      <div>
+                        <Label htmlFor="price">Price</Label>
+                        <Input id="price" placeholder="e.g., ₹2,500" required onChange={(e) => handleInputChange("price", e.target.value)} />
+                      </div>
+                      <div>
+                        <Label htmlFor="description">Description</Label>
+                        <Textarea id="description" placeholder="Describe the item" required onChange={(e) => handleInputChange("description", e.target.value)} />
+                      </div>
+                    </>
+                  )}
+
+                  {postType === 'resources' && (
+                    <>
+                      <div>
+                        <Label htmlFor="title">Resource Title</Label>
+                        <Input id="title" placeholder="e.g., Lending Pressure Cooker" required onChange={(e) => handleInputChange("title", e.target.value)} />
+                      </div>
+                      <div>
+                        <Label htmlFor="description">Description</Label>
+                        <Textarea id="description" placeholder="Describe the resource you are offering or requesting" required onChange={(e) => handleInputChange("description", e.target.value)} />
+                      </div>
+                      <div>
+                        <Label htmlFor="status">Status</Label>
+                        <Select required onValueChange={(value) => handleInputChange("status", value)}>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select status" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="Available">Available</SelectItem>
+                            <SelectItem value="Requested">Requested</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </>
+                  )}
+
+                  {postType === 'skills' && (
+                    <>
+                      <div>
+                        <Label htmlFor="title">Skill Title</Label>
+                        <Input id="title" placeholder="e.g., Yoga & Pranayama Classes" required onChange={(e) => handleInputChange("title", e.target.value)} />
+                      </div>
+                      <div>
+                        <Label htmlFor="description">Description</Label>
+                        <Textarea id="description" placeholder="Describe the skill you are offering" required onChange={(e) => handleInputChange("description", e.target.value)} />
+                      </div>
+                      <div>
+                        <Label htmlFor="seeking">Seeking</Label>
+                        <Input id="seeking" placeholder="What you are seeking in return" required onChange={(e) => handleInputChange("seeking", e.target.value)} />
+                      </div>
+                    </>
+                  )}
+
+                  <div className="flex justify-end gap-3 pt-4">
+                    <Button type="button" variant="outline" onClick={() => setDialogOpen(false)}>
+                      Cancel
+                    </Button>
+                    <Button type="submit">Submit Post</Button>
+                  </div>
+                </form>
+              </DialogContent>
+            </Dialog>
           </div>
 
           <Tabs defaultValue="buy-sell" className="w-full">
@@ -139,7 +274,7 @@ const CommunityHub = () => {
 
             <TabsContent value="buy-sell" className="space-y-6">
               <div className="grid md:grid-cols-3 gap-6">
-                {buyAndSell.map(item => (
+                {buySellItems.map(item => (
                   <Card key={item.id} className="group hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 h-full rounded-xl border-2 border-gray-200 bg-white/80 backdrop-blur-sm">
                     <div className="aspect-video overflow-hidden rounded-t-xl">
                       <img src={item.imageUrl} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
@@ -165,7 +300,7 @@ const CommunityHub = () => {
             </TabsContent>
 
             <TabsContent value="resources" className="space-y-6">
-              {resourceSharing.map(item => (
+              {resourceItems.map(item => (
                 <Card key={item.id} className="group hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 h-full rounded-xl border-2 border-gray-200 bg-white/80 backdrop-blur-sm">
                   <CardHeader className="p-6">
                     <div className="flex items-start justify-between">
@@ -202,7 +337,7 @@ const CommunityHub = () => {
             </TabsContent>
 
             <TabsContent value="skills" className="space-y-6">
-              {skillExchange.map(item => (
+              {skillItems.map(item => (
                 <Card key={item.id} className="group hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 h-full rounded-xl border-2 border-gray-200 bg-white/80 backdrop-blur-sm">
                   <CardHeader className="p-6">
                     <CardTitle className="text-xl font-heading flex items-center gap-2 text-gray-800 mb-2">

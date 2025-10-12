@@ -35,6 +35,7 @@ export const Layout = ({ children, userRole = "resident" }: LayoutProps) => {
   };
 
   const residentLinks = [
+    { to: "/", icon: Home, label: "Home" },
     { to: "/dashboard", icon: Home, label: "Dashboard" },
     { to: "/community-hub", icon: Users, label: "Community Hub" },
     { to: "/complaints", icon: MessageSquare, label: "Complaint Box" },
@@ -43,6 +44,7 @@ export const Layout = ({ children, userRole = "resident" }: LayoutProps) => {
   ];
 
   const secretaryLinks = [
+    { to: "/", icon: Home, label: "Home" },
     { to: "/secretary/dashboard", icon: Home, label: "Dashboard" },
     { to: "/secretary/members", icon: Users, label: "Member Requests" },
     { to: "/secretary/complaints", icon: MessageSquare, label: "All Complaints" },
@@ -50,6 +52,7 @@ export const Layout = ({ children, userRole = "resident" }: LayoutProps) => {
   ];
 
   const areaHeadLinks = [
+    { to: "/", icon: Home, label: "Home" },
     { to: "/area-head/dashboard", icon: Home, label: "Dashboard" },
     { to: "/area-head/communities", icon: Users, label: "Community Requests" },
   ];
@@ -60,6 +63,12 @@ export const Layout = ({ children, userRole = "resident" }: LayoutProps) => {
     residentLinks;
 
   const isActive = (path: string) => location.pathname === path;
+
+  const handleLinkClick = () => {
+    if (window.innerWidth <= 768) {
+      setSidebarOpen(false);
+    }
+  };
 
 
   const dashboardPaths = [
@@ -97,9 +106,11 @@ export const Layout = ({ children, userRole = "resident" }: LayoutProps) => {
               {sidebarOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </Button>
           )}
-          <div className="flex items-center gap-2">
-            <Shield className="h-6 w-6" />
-            <h1 className="text-xl font-heading font-bold text-white">Sampark</h1>
+          <div className="flex items-center gap-3">
+            <div className="bg-white/10 p-2 rounded-lg">
+              <Users className="h-5 w-5 text-white" />
+            </div>
+            <h1 className="text-xl font-heading font-bold text-white tracking-tight">Sampark</h1>
           </div>
         </div>
         <div className="flex items-center gap-3">
@@ -140,9 +151,11 @@ export const Layout = ({ children, userRole = "resident" }: LayoutProps) => {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-56 bg-white border-gray-200">
-              <DropdownMenuItem>
-                <Settings className="mr-2 h-4 w-4" />
-                Settings
+              <DropdownMenuItem asChild>
+                <Link to="/settings" className="flex items-center">
+                  <Settings className="mr-2 h-4 w-4" />
+                  Settings
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <Link to="/" className="flex items-center">
@@ -156,9 +169,15 @@ export const Layout = ({ children, userRole = "resident" }: LayoutProps) => {
       </header>
 
       {/* Sidebar */}
+      <div
+        className={`fixed inset-0 bg-black/50 z-30 md:hidden transition-opacity duration-300 ${
+          sidebarOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
+        onClick={() => setSidebarOpen(false)}
+      />
       <aside
-        className={`fixed left-0 top-16 bottom-0 bg-blue-900 text-white border-r border-blue-800 transition-all duration-300 z-40 ${
-          sidebarOpen ? "w-64" : "w-0"
+        className={`fixed left-0 top-16 bottom-0 bg-blue-900 text-white border-r border-blue-800 transition-all duration-300 z-40 md:w-64 ${
+          sidebarOpen ? "w-64 md:w-64" : "w-0"
         } overflow-hidden`}
       >
         <nav className="p-4 space-y-2">
@@ -168,6 +187,7 @@ export const Layout = ({ children, userRole = "resident" }: LayoutProps) => {
               <Link
                 key={link.to}
                 to={link.to}
+                onClick={handleLinkClick}
                 className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all hover:bg-blue-800/50 ${
                   isActive(link.to)
                     ? "bg-blue-800 text-white font-medium"
@@ -185,7 +205,7 @@ export const Layout = ({ children, userRole = "resident" }: LayoutProps) => {
       {/* Main Content */}
       <main
         className={`pt-16 transition-all duration-300 ${
-          sidebarOpen ? "ml-64" : "ml-0"
+          sidebarOpen ? "md:ml-64" : "ml-0"
         }`}
       >
         <div className="p-6">

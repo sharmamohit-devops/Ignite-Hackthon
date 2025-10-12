@@ -14,8 +14,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        heading: ["Poppins", "sans-serif"],
-        sans: ["Inter", "Open Sans", "sans-serif"],
+        heading: ["Figtree", "sans-serif"],
+        sans: ["Figtree", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",

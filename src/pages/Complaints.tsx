@@ -15,6 +15,17 @@ import { ChatBot } from "@/components/ChatBot";
 const Complaints = () => {
   const [complaintsList, setComplaintsList] = useState(complaints);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [newComplaint, setNewComplaint] = useState({
+    title: "",
+    category: "",
+    priority: "",
+    location: "",
+    description: "",
+  });
+
+  const handleInputChange = (field: string, value: string) => {
+    setNewComplaint((prev) => ({ ...prev, [field]: value }));
+  };
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -34,11 +45,23 @@ const Complaints = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate form submission
-    setTimeout(() => {
-      setDialogOpen(false);
-      // Show success feedback
-    }, 1000);
+    const newComplaintData = {
+      id: complaintsList.length + 1,
+      ...newComplaint,
+      status: "Pending",
+      submittedBy: "Current User", // Placeholder
+      submittedOn: new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' }),
+      imageUrl: null, // Placeholder
+    };
+    setComplaintsList([newComplaintData, ...complaintsList]);
+    setNewComplaint({
+      title: "",
+      category: "",
+      priority: "",
+      location: "",
+      description: "",
+    });
+    setDialogOpen(false);
   };
 
   return (
@@ -67,40 +90,40 @@ const Complaints = () => {
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
                   <Label htmlFor="title">Complaint Title</Label>
-                  <Input id="title" placeholder="Brief description of the issue" required />
+                  <Input id="title" placeholder="Brief description of the issue" required value={newComplaint.title} onChange={(e) => handleInputChange("title", e.target.value)} />
                 </div>
                 <div>
                   <Label htmlFor="category">Category</Label>
-                  <Select required>
+                  <Select required onValueChange={(value) => handleInputChange("category", value)} value={newComplaint.category}>
                     <SelectTrigger>
                       <SelectValue placeholder="Select category" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="maintenance">Maintenance</SelectItem>
-                      <SelectItem value="plumbing">Plumbing</SelectItem>
-                      <SelectItem value="electrical">Electrical</SelectItem>
-                      <SelectItem value="security">Security</SelectItem>
-                      <SelectItem value="cleanliness">Cleanliness</SelectItem>
-                      <SelectItem value="management">Management</SelectItem>
+                      <SelectItem value="Maintenance">Maintenance</SelectItem>
+                      <SelectItem value="Plumbing">Plumbing</SelectItem>
+                      <SelectItem value="Electrical">Electrical</SelectItem>
+                      <SelectItem value="Security">Security</SelectItem>
+                      <SelectItem value="Cleanliness">Cleanliness</SelectItem>
+                      <SelectItem value="Management">Management</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
                 <div>
                   <Label htmlFor="priority">Priority</Label>
-                  <Select required>
+                  <Select required onValueChange={(value) => handleInputChange("priority", value)} value={newComplaint.priority}>
                     <SelectTrigger>
                       <SelectValue placeholder="Select priority" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="low">Low</SelectItem>
-                      <SelectItem value="medium">Medium</SelectItem>
-                      <SelectItem value="high">High</SelectItem>
+                      <SelectItem value="Low">Low</SelectItem>
+                      <SelectItem value="Medium">Medium</SelectItem>
+                      <SelectItem value="High">High</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
                 <div>
                   <Label htmlFor="location">Location</Label>
-                  <Input id="location" placeholder="Where is the issue located?" required />
+                  <Input id="location" placeholder="Where is the issue located?" required value={newComplaint.location} onChange={(e) => handleInputChange("location", e.target.value)} />
                 </div>
                 <div>
                   <Label htmlFor="description">Detailed Description</Label>
@@ -109,6 +132,8 @@ const Complaints = () => {
                     placeholder="Provide detailed information about the issue"
                     className="min-h-[100px]"
                     required
+                    value={newComplaint.description}
+                    onChange={(e) => handleInputChange("description", e.target.value)}
                   />
                 </div>
                 <div>

@@ -4,12 +4,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
+import { Textarea } from "@/components/ui/textarea";
 import { Heart, MessageSquare, Pin, Sparkles, Languages } from "lucide-react";
 import { posts } from "@/data/mockData";
 import { ChatBot } from "@/components/ChatBot";
 
 const Dashboard = () => {
   const [postsData, setPostsData] = useState(posts.map(p => ({ ...p, showSummary: false, showTranslation: false })));
+  const [newPostContent, setNewPostContent] = useState("");
 
   const toggleSummary = (id: number) => {
     setPostsData(prev => prev.map(p => 
@@ -29,12 +31,58 @@ const Dashboard = () => {
     ));
   };
 
+  const handlePostSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newPostContent.trim()) return;
+
+    const newPost = {
+      id: postsData.length + 1,
+      author: "Current User",
+      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=new-user",
+      role: "Resident",
+      timestamp: "Just now",
+      isPinned: false,
+      content: newPostContent,
+      likes: 0,
+      comments: 0,
+      showSummary: false,
+      showTranslation: false,
+      translatedContent: "",
+      aiSummary: "This is a new post.",
+    };
+
+    setPostsData([newPost, ...postsData]);
+    setNewPostContent("");
+  };
+
   return (
     <Layout userRole="resident">
       <div className="max-w-4xl mx-auto space-y-6">
-        <div>
-          <h1 className="text-3xl font-heading font-bold mb-2">Community Feed</h1>
-          <p className="text-muted-foreground">Stay updated with what's happening in your community</p>
+        <div className="space-y-6">
+          <div>
+            <h1 className="text-3xl font-heading font-bold mb-2">Community Feed</h1>
+            <p className="text-muted-foreground">Stay updated with what's happening in your community</p>
+          </div>
+
+          <Card className="card-shadow">
+            <CardHeader>
+              <CardTitle className="text-lg">Create a Post</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <form onSubmit={handlePostSubmit} className="space-y-4">
+                <Textarea
+                  placeholder="What's on your mind?"
+                  value={newPostContent}
+                  onChange={(e) => setNewPostContent(e.target.value)}
+                  className="min-h-[100px]"
+                  required
+                />
+                <div className="flex justify-end">
+                  <Button type="submit">Post</Button>
+                </div>
+              </form>
+            </CardContent>
+          </Card>
         </div>
 
         {postsData.map(post => (
