@@ -1,23 +1,45 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Layout } from "@/components/Layout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { UserPlus, CheckCircle, XCircle } from "lucide-react";
-import { pendingMembers } from "@/data/mockData";
+import { UserPlus, CheckCircle, XCircle, Clock, User, FileText, Phone, Mail, MapPin, Home } from "lucide-react";
+import { getPendingMembers, approveMember, rejectMember } from "@/lib/localStorage";
 import { toast } from "sonner";
 
 const MemberRequests = () => {
-  const [requests, setRequests] = useState(pendingMembers);
+  const [requests, setRequests] = useState<any[]>([]);
+
+  // Load registration requests from localStorage
+  useEffect(() => {
+    loadRequests();
+  }, []);
+
+  const loadRequests = () => {
+    const allRequests = JSON.parse(localStorage.getItem('sampark_registration_requests') || '[]');
+    // Filter only resident requests (secretary verifies residents)
+    const residentRequests = allRequests.filter((req: any) => req.type === 'resident' && req.status === 'pending');
+    setRequests(residentRequests);
+  };
 
   const handleApprove = (id: number) => {
-    setRequests(prev => prev.filter(req => req.id !== id));
-    toast.success("Member approved successfully!");
+    const allRequests = JSON.parse(localStorage.getItem('sampark_registration_requests') || '[]');
+    const updatedRequests = allRequests.map((req: any) => 
+      req.id === id ? { ...req, status: 'approved', approvedAt: new Date().toISOString() } : req
+    );
+    localStorage.setItem('sampark_registration_requests', JSON.stringify(updatedRequests));
+    loadRequests();
+    toast.success("Registration approved! User can now login.");
   };
 
   const handleReject = (id: number) => {
-    setRequests(prev => prev.filter(req => req.id !== id));
-    toast.error("Member request rejected");
+    const allRequests = JSON.parse(localStorage.getItem('sampark_registration_requests') || '[]');
+    const updatedRequests = allRequests.map((req: any) => 
+      req.id === id ? { ...req, status: 'rejected', rejectedAt: new Date().toISOString() } : req
+    );
+    localStorage.setItem('sampark_registration_requests', JSON.stringify(updatedRequests));
+    loadRequests();
+    toast.error("Registration request rejected");
   };
 
   return (
@@ -39,42 +61,70 @@ const MemberRequests = () => {
         ) : (
           <div className="space-y-4">
             {requests.map(request => (
-              <Card key={request.id} className="hover-lift">
+              <Card key={request.id} className="hover:shadow-lg transition-all">
                 <CardHeader>
                   <div className="flex items-start justify-between">
-                    <div>
-                      <CardTitle className="text-lg">{request.name}</CardTitle>
-                      <CardDescription>
-                        Flat: {request.flat} | Applied on: {request.appliedOn}
-                      </CardDescription>
+                    <div className="flex items-center gap-3">
+                      <div className="h-12 w-12 rounded-full bg-blue-100 flex items-center justify-center">
+                        <User className="h-6 w-6 text-blue-900" />
+                      </div>
+                      <div>
+                        <CardTitle className="text-xl">{request.name}</CardTitle>
+                        <CardDescription className="flex items-center gap-2 mt-1">
+                          <Clock className="h-3 w-3" />
+                          {new Date(request.submittedAt).toLocaleDateString()}
+                        </CardDescription>
+                      </div>
                     </div>
-                    <Badge variant="secondary">Pending</Badge>
+                    <Badge variant="secondary" className="gap-1">
+                      <Clock className="h-3 w-3" />
+                      Pending
+                    </Badge>
                   </div>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <div className="grid md:grid-cols-2 gap-3 text-sm">
-                    <div>
-                      <span className="font-medium">Email:</span> {request.email}
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="flex items-center gap-2 text-sm">
+                      <Mail className="h-4 w-4 text-gray-500" />
+                      <span className="font-medium">Email:</span>
+                      <span className="text-gray-600">{request.email}</span>
                     </div>
-                    <div>
-                      <span className="font-medium">Phone:</span> {request.phone}
+                    <div className="flex items-center gap-2 text-sm">
+                      <Phone className="h-4 w-4 text-gray-500" />
+                      <span className="font-medium">Phone:</span>
+                      <span className="text-gray-600">{request.phone}</span>
                     </div>
-                    <div className="md:col-span-2">
-                      <span className="font-medium">Documents:</span> {request.documents}
+                    <div className="flex items-center gap-2 text-sm">
+                      <Home className="h-4 w-4 text-gray-500" />
+                      <span className="font-medium">Apartment:</span>
+                      <span className="text-gray-600">{request.apartment}</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm">
+                      <FileText className="h-4 w-4 text-gray-500" />
+                      <span className="font-medium">Document:</span>
+                      <span className="text-gray-600">{request.document}</span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-2 text-sm p-3 bg-gray-50 rounded-lg">
+                    <MapPin className="h-4 w-4 text-gray-500 mt-0.5" />
+                    <div>
+                      <span className="font-medium">Address:</span>
+                      <p className="text-gray-600 mt-1">{request.address}</p>
                     </div>
                   </div>
 
                   <div className="flex gap-3 pt-3 border-t">
                     <Button
                       variant="default"
-                      className="flex-1 gap-2"
+                      className="flex-1 gap-2 bg-green-600 hover:bg-green-700"
                       onClick={() => handleApprove(request.id)}
                     >
                       <CheckCircle className="h-4 w-4" />
                       Approve
                     </Button>
                     <Button
-                      variant="outline"
+                      variant="destructive"
                       className="flex-1 gap-2"
                       onClick={() => handleReject(request.id)}
                     >

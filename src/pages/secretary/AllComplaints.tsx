@@ -1,19 +1,27 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Layout } from "@/components/Layout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { FileText } from "lucide-react";
-import { complaints } from "@/data/mockData";
+import { getComplaints, updateComplaint } from "@/lib/localStorage";
 import { toast } from "sonner";
 
 const AllComplaints = () => {
-  const [complaintsList, setComplaintsList] = useState(complaints);
+  const [complaintsList, setComplaintsList] = useState<any[]>([]);
+
+  // Load complaints from localStorage
+  useEffect(() => {
+    const loadedComplaints = getComplaints();
+    setComplaintsList(loadedComplaints);
+  }, []);
 
   const handleStatusChange = (id: number, newStatus: string) => {
-    setComplaintsList(prev => prev.map(c => 
+    const updatedComplaints = complaintsList.map(c => 
       c.id === id ? { ...c, status: newStatus } : c
-    ));
+    );
+    setComplaintsList(updatedComplaints);
+    updateComplaint(id, { status: newStatus });
     toast.success(`Complaint status updated to ${newStatus}`);
   };
 

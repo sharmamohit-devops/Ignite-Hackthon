@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { 
   Home, Users, MessageSquare, FileText, BookOpen, 
   BarChart3, Menu, X, Bell, Search, AlertCircle,
-  LogOut, Settings, Shield, ArrowLeft
+  LogOut, Settings, Shield, ArrowLeft, PlusCircle
 } from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
@@ -15,6 +15,8 @@ import {
 } from "./ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { SOSModal } from "./SOSModal";
+import { useAuth } from "@/contexts/AuthContext";
+import { toast } from "sonner";
 
 interface LayoutProps {
   children: ReactNode;
@@ -26,6 +28,7 @@ export const Layout = ({ children, userRole = "resident" }: LayoutProps) => {
   const [sosModalOpen, setSOSModalOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const { logout, user } = useAuth();
 
   const gridPattern = `data:image/svg+xml,%3Csvg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" stroke="%23ffffff" stroke-width="0.5" stroke-opacity="0.05"%3E%3Cline x1="0" y1="0" x2="32" y2="0"/%3E%3Cline x1="0" y1="8" x2="32" y2="8"/%3E%3Cline x1="0" y1="16" x2="32" y2="16"/%3E%3Cline x1="0" y1="24" x2="32" y2="24"/%3E%3Cline x1="0" y1="32" x2="32" y2="32"/%3E%3Cline x1="0" y1="0" x2="0" y2="32"/%3E%3Cline x1="8" y1="0" x2="8" y2="32"/%3E%3Cline x1="16" y1="0" x2="16" y2="32"/%3E%3Cline x1="24" y1="0" x2="24" y2="32"/%3E%3Cline x1="32" y1="0" x2="32" y2="32"/%3E%3C/g%3E%3C/svg%3E`;
 
@@ -35,7 +38,6 @@ export const Layout = ({ children, userRole = "resident" }: LayoutProps) => {
   };
 
   const residentLinks = [
-    { to: "/", icon: Home, label: "Home" },
     { to: "/dashboard", icon: Home, label: "Dashboard" },
     { to: "/community-hub", icon: Users, label: "Community Hub" },
     { to: "/complaints", icon: MessageSquare, label: "Complaint Box" },
@@ -44,15 +46,13 @@ export const Layout = ({ children, userRole = "resident" }: LayoutProps) => {
   ];
 
   const secretaryLinks = [
-    { to: "/", icon: Home, label: "Home" },
     { to: "/secretary/dashboard", icon: Home, label: "Dashboard" },
     { to: "/secretary/members", icon: Users, label: "Member Requests" },
     { to: "/secretary/complaints", icon: MessageSquare, label: "All Complaints" },
-    { to: "/secretary/heatmap", icon: BarChart3, label: "Complaint Heatmap" },
+    { to: "/secretary/polls", icon: PlusCircle, label: "Create Poll" },
   ];
 
   const areaHeadLinks = [
-    { to: "/", icon: Home, label: "Home" },
     { to: "/area-head/dashboard", icon: Home, label: "Dashboard" },
     { to: "/area-head/communities", icon: Users, label: "Community Requests" },
   ];
@@ -80,6 +80,12 @@ export const Layout = ({ children, userRole = "resident" }: LayoutProps) => {
 
   const handleGoBack = () => {
     navigate(-1);
+  };
+
+  const handleLogout = () => {
+    logout();
+    toast.success("Logged out successfully!");
+    navigate("/login");
   };
 
   return (
@@ -145,8 +151,8 @@ export const Layout = ({ children, userRole = "resident" }: LayoutProps) => {
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="relative h-9 w-9 rounded-full">
                 <Avatar className="h-9 w-9">
-                  <AvatarImage src="https://api.dicebear.com/7.x/avataaars/svg?seed=user" />
-                  <AvatarFallback className="bg-white/20 text-white">U</AvatarFallback>
+                  <AvatarImage src={user?.avatar || "https://api.dicebear.com/7.x/avataaars/svg?seed=user"} />
+                  <AvatarFallback className="bg-white/20 text-white">{user?.name?.[0] || "U"}</AvatarFallback>
                 </Avatar>
               </Button>
             </DropdownMenuTrigger>
@@ -157,11 +163,9 @@ export const Layout = ({ children, userRole = "resident" }: LayoutProps) => {
                   Settings
                 </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link to="/" className="flex items-center">
-                  <LogOut className="mr-2 h-4 w-4" />
-                  Logout
-                </Link>
+              <DropdownMenuItem onClick={handleLogout} className="flex items-center cursor-pointer">
+                <LogOut className="mr-2 h-4 w-4" />
+                Logout
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

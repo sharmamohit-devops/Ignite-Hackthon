@@ -1,15 +1,25 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Layout } from "@/components/Layout";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Search, User, Store, Phone, Mail, Star } from "lucide-react";
-import { members, vendors } from "@/data/mockData";
+import { getMembers, getVendors } from "@/lib/localStorage";
 import { ChatBot } from "@/components/ChatBot";
 
 const Directory = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [members, setMembers] = useState<any[]>([]);
+  const [vendors, setVendors] = useState<any[]>([]);
+
+  // Load data from localStorage
+  useEffect(() => {
+    const loadedMembers = getMembers();
+    const loadedVendors = getVendors();
+    setMembers(loadedMembers);
+    setVendors(loadedVendors);
+  }, []);
 
   const filteredMembers = members.filter(member =>
     member.name.toLowerCase().includes(searchTerm.toLowerCase()) ||

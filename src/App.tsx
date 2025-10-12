@@ -14,6 +14,7 @@ import SecretaryDashboard from "./pages/secretary/SecretaryDashboard";
 import MemberRequests from "./pages/secretary/MemberRequests";
 import AllComplaints from "./pages/secretary/AllComplaints";
 import ComplaintHeatmap from "./pages/secretary/ComplaintHeatmap";
+import SecretaryPolls from "./pages/secretary/SecretaryPolls";
 import AreaHeadDashboard from "./pages/areahead/AreaHeadDashboard";
 import CommunityRequests from "./pages/areahead/CommunityRequests";
 import Settings from "./pages/Settings";
@@ -43,7 +44,7 @@ const App = () => (
           <Route path="/secretary/dashboard" element={<SecretaryDashboard />} />
           <Route path="/secretary/members" element={<MemberRequests />} />
           <Route path="/secretary/complaints" element={<AllComplaints />} />
-          <Route path="/secretary/heatmap" element={<ComplaintHeatmap />} />
+          <Route path="/secretary/polls" element={<SecretaryPolls />} />
           
           {/* Area Head Routes */}
           <Route path="/area-head/dashboard" element={<AreaHeadDashboard />} />

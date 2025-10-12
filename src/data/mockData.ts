@@ -8,9 +8,10 @@ export const posts = [
     timestamp: "2 hours ago",
     isPinned: true,
     likes: 45,
-    comments: 12,
-    aiSummary: "📢 Annual meeting on June 15 at 10 AM in community hall. Topics: budget, maintenance, security protocols. Attendance requested.",
-    translatedContent: "📢 महत्वपूर्ण सूचना: वार्षिक आम बैठक शनिवार, 15 जून को सुबह 10 बजे सामुदायिक हॉल में आयोजित की जाएगी।"
+    comments: 3,
+    translatedContent: "📢 महत्वपूर्ण सूचना: वार्षिक आम बैठक शनिवार, 15 जून को सुबह 10 बजे सामुदायिक हॉल में आयोजित की जाएगी।",
+    userId: 2,
+    showTranslation: false
   },
   {
     id: 2,
@@ -21,9 +22,10 @@ export const posts = [
     timestamp: "5 hours ago",
     isPinned: false,
     likes: 23,
-    comments: 8,
-    aiSummary: "Lift in Block A making strange noises since yesterday. Asking if others noticed and if maintenance should be called.",
-    translatedContent: "सभी को सुप्रभात! ब्लॉक ए की लिफ्ट कल से अजीब आवाजें कर रही है। क्या किसी और ने इसे देखा है?"
+    comments: 2,
+    translatedContent: "सभी को सुप्रभात! ब्लॉक ए की लिफ्ट कल से अजीब आवाजें कर रही है। क्या किसी और ने इसे देखा है?",
+    userId: 1,
+    showTranslation: false
   },
   {
     id: 3,
@@ -34,9 +36,38 @@ export const posts = [
     timestamp: "1 day ago",
     isPinned: false,
     likes: 67,
-    comments: 15,
-    aiSummary: "Appreciation post for kids' art workshop. Daughter enjoyed and made paintings. Hoping for more events.",
-    translatedContent: "पिछले सप्ताहांत में बच्चों की कला कार्यशाला का आयोजन करने वाले को धन्यवाद! मेरी बेटी ने इसे बहुत पसंद किया।"
+    comments: 4,
+    translatedContent: "पिछले सप्ताहांत में बच्चों की कला कार्यशाला का आयोजन करने वाले को धन्यवाद! मेरी बेटी ने इसे बहुत पसंद किया।",
+    userId: 1,
+    showTranslation: false
+  },
+  {
+    id: 4,
+    author: "Amit Patel",
+    role: "Resident",
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=amit",
+    content: "Does anyone know a good plumber? Need to fix a leaking tap in my kitchen. Please share contact details if you have any recommendations.",
+    timestamp: "2 days ago",
+    isPinned: false,
+    likes: 12,
+    comments: 5,
+    translatedContent: "क्या किसी को अच्छा प्लंबर पता है? मेरी रसोई में नल से पानी टपक रहा है।",
+    userId: 1,
+    showTranslation: false
+  },
+  {
+    id: 5,
+    author: "Neha Gupta",
+    role: "Resident",
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=neha",
+    content: "Reminder: Garbage collection timings have changed. Now it's 7 AM instead of 8 AM. Please keep your bins ready by 6:45 AM. 🗑️",
+    timestamp: "3 days ago",
+    isPinned: false,
+    likes: 34,
+    comments: 1,
+    translatedContent: "अनुस्मारक: कचरा संग्रहण का समय बदल गया है। अब यह 8 बजे के बजाय 7 बजे है।",
+    userId: 1,
+    showTranslation: false
   }
 ];
 

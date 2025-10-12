@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Layout } from "@/components/Layout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -8,12 +8,26 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Plus, FileText } from "lucide-react";
-import { complaints } from "@/data/mockData";
+import { Plus, FileText, Trash2 } from "lucide-react";
+import { getComplaints, addComplaint, deleteComplaint } from "@/lib/localStorage";
+import { useAuth } from "@/contexts/AuthContext";
 import { ChatBot } from "@/components/ChatBot";
+import { toast } from "sonner";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 const Complaints = () => {
-  const [complaintsList, setComplaintsList] = useState(complaints);
+  const { user } = useAuth();
+  const [complaintsList, setComplaintsList] = useState<any[]>([]);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [newComplaint, setNewComplaint] = useState({
     title: "",
@@ -22,6 +36,14 @@ const Complaints = () => {
     location: "",
     description: "",
   });
+
+  // Load complaints from localStorage
+  useEffect(() => {
+    const loadedComplaints = getComplaints();
+    console.log('📥 Loading complaints from localStorage:', loadedComplaints.length);
+    // Reverse to show newest first (latest on top)
+    setComplaintsList(loadedComplaints.reverse());
+  }, []);
 
   const handleInputChange = (field: string, value: string) => {
     setNewComplaint((prev) => ({ ...prev, [field]: value }));
@@ -46,14 +68,17 @@ const Complaints = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const newComplaintData = {
-      id: complaintsList.length + 1,
       ...newComplaint,
       status: "Pending",
-      submittedBy: "Current User", // Placeholder
+      submittedBy: user?.name || "Current User",
       submittedOn: new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' }),
-      imageUrl: null, // Placeholder
+      imageUrl: null,
+      userId: user?.id, // Add user ID to track ownership
     };
-    setComplaintsList([newComplaintData, ...complaintsList]);
+    
+    const savedComplaint = addComplaint(newComplaintData);
+    console.log('💾 Complaint saved with ID:', savedComplaint.id);
+    setComplaintsList([savedComplaint, ...complaintsList]);
     setNewComplaint({
       title: "",
       category: "",
@@ -62,6 +87,13 @@ const Complaints = () => {
       description: "",
     });
     setDialogOpen(false);
+    toast.success("Complaint filed successfully!");
+  };
+
+  const handleDeleteComplaint = (complaintId: number) => {
+    deleteComplaint(complaintId);
+    setComplaintsList(complaintsList.filter(c => c.id !== complaintId));
+    toast.success("Complaint deleted successfully!");
   };
 
   return (
@@ -165,13 +197,37 @@ const Complaints = () => {
                     </CardTitle>
                     <CardDescription>{complaint.location}</CardDescription>
                   </div>
-                  <div className="flex gap-2">
+                  <div className="flex gap-2 items-center">
                     <Badge variant={getStatusColor(complaint.status)}>
                       {complaint.status}
                     </Badge>
                     <Badge variant={getPriorityColor(complaint.priority)}>
                       {complaint.priority}
                     </Badge>
+                    {/* Show delete button only for complaint owner */}
+                    {complaint.userId === user?.id && (
+                      <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                          <Button variant="ghost" size="sm" className="text-destructive hover:text-destructive h-8 w-8 p-0">
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>Delete Complaint?</AlertDialogTitle>
+                            <AlertDialogDescription>
+                              Are you sure you want to delete this complaint? This action cannot be undone.
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction onClick={() => handleDeleteComplaint(complaint.id)} className="bg-destructive hover:bg-destructive/90">
+                              Delete
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
+                    )}
                   </div>
                 </div>
               </CardHeader>
