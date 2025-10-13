@@ -13,12 +13,12 @@
 
 ## 👥 **Team Members**
 
-| 👩‍💼 **Name** | 🎓 **Enrollment No.** | 🏢 **Department** | 🚻 **Gender** | 📧 **Email ID** | 📞 **Mobile No.** | 🗓️ **Year** | 🏅 **Role** |
+| 👩‍💼 **Name** | 🎓 **Enrollment No.** | 🏢 **Department** | 🚻 **Gender** | 📧 **Email ID** | 🗓️ **Year** | 🏅 **Role** |
 |---------------|----------------------|-------------------|---------------|------------------|------------------|--------------|--------------|
-| 🏆 **AATIFA RIZVI** | GQ0385 | Interdisciplinary Centre for Artificial Intelligence | F | rizviaatifa235@gmail.com | 9084041071 | (2024–28) 2nd Year | **Team Leader** |
-| 🤖 **AARIF KHAN** | GQ0103 | Interdisciplinary Centre for Artificial Intelligence | M | iamaakoji@gmail.com | 8059314416 | (2024–28) 2nd Year | Member |
-| ⚡ **MOHIT SHARMA** | GN3605 | Electrical Engineering | M | mohitfrontendev@gmail.com | 8477911049 | (2024–28) 2nd Year | Member |
-| 💻 **AZHAN ALI** | GQ0157 | Interdisciplinary Centre for Artificial Intelligence | M | azhanali2409@gmail.com | 9155477990 | (2024–28) 2nd Year | Member |
+| 🏆 **AATIFA RIZVI** | GQ0385 | Interdisciplinary Centre for Artificial Intelligence | F | rizviaatifa235@gmail.com | (2024–28) 2nd Year | **Team Leader** |
+| 🤖 **AARIF KHAN** | GQ0103 | Interdisciplinary Centre for Artificial Intelligence | M | iamaakoji@gmail.com  (2024–28) 2nd Year | Member |
+| ⚡ **MOHIT SHARMA** | GN3605 | Electrical Engineering | M | mohitfrontendev@gmail.com | (2024–28) 2nd Year | Member |
+| 💻 **AZHAN ALI** | GQ0157 | Interdisciplinary Centre for Artificial Intelligence | M | azhanali2409@gmail.com | (2024–28) 2nd Year | Member |
 
 ---
 
