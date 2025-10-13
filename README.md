@@ -13,12 +13,12 @@
 
 ## 👥 **Team Members**
 
-| 👩‍💼 **Name** | 🎓 **Enrollment No.** | 🏢 **Department** | 🚻 **Gender** | 📧 **Email ID** | 🗓️ **Year** | 🏅 **Role** |
-|---------------|----------------------|-------------------|---------------|------------------|------------------|--------------|--------------|
-| 🏆 **AATIFA RIZVI** | GQ0385 | Interdisciplinary Centre for Artificial Intelligence | F | rizviaatifa235@gmail.com | (2024–28) 2nd Year | **Team Leader** |
-| 🤖 **AARIF KHAN** | GQ0103 | Interdisciplinary Centre for Artificial Intelligence | M | iamaakoji@gmail.com  (2024–28) 2nd Year | Member |
-| ⚡ **MOHIT SHARMA** | GN3605 | Electrical Engineering | M | mohitfrontendev@gmail.com | (2024–28) 2nd Year | Member |
-| 💻 **AZHAN ALI** | GQ0157 | Interdisciplinary Centre for Artificial Intelligence | M | azhanali2409@gmail.com | (2024–28) 2nd Year | Member |
+| 👩‍💼 **Name** | 🎓 **Enrollment No.** | 🏢 **Department** | 🚻 **Gender** | 🗓️ **Year** | 🏅 **Role** |
+|---------------|----------------------|-------------------|---------------|--------------|--------------|
+| 🏆 **AATIFA RIZVI** | GQ0385 | Interdisciplinary Centre for Artificial Intelligence | F | (2024–28) 2nd Year | **Team Leader** |
+| 🤖 **AARIF KHAN** | GQ0103 | Interdisciplinary Centre for Artificial Intelligence | M | (2024–28) 2nd Year | Member |
+| ⚡ **MOHIT SHARMA** | GN3605 | Electrical Engineering | M | (2024–28) 2nd Year | Member |
+| 💻 **AZHAN ALI** | GQ0157 | Interdisciplinary Centre for Artificial Intelligence | M | (2024–28) 2nd Year | Member |
 
 ---
 
@@ -36,10 +36,10 @@ A smarter system of engagement could solve many of these gaps.
 
 ## 💡 **Our Solution – Sampark**
 
-**Sampark** is a centralized community platform designed to make neighborhoods, markets, and campuses more connected and collaborative.  
-It enables members to share updates, organize events, and build trust — all in one intuitive digital space.
+**Sampark** is a centralized digital platform that strengthens communication, collaboration, and coordination in communities.  
+It enables users to post announcements, share resources, organize events, and build trust — all within a single, secure ecosystem.
 
-🎯 **Goal:** Empower communities with smarter communication, resource sharing, and inclusivity through modern technology.
+🎯 **Goal:** Empower communities with smart technology that fosters inclusivity, trust, and seamless interaction.
 
 ---
 
@@ -56,12 +56,12 @@ It enables members to share updates, organize events, and build trust — all in
 
 | 🌟 Feature | 🧠 Description |
 |-------------|----------------|
-| 📢 **Announcements Board** | Broadcast important messages to all members instantly. |
+| 📢 **Announcements Board** | Broadcast important messages instantly. |
 | 🔄 **Resource Sharing** | Share, lend, or borrow items securely within your community. |
-| 🗓️ **Event Management** | Plan, organize, and join community events with ease. |
-| 🛡️ **Verified Profiles** | Ensure member authenticity and maintain trust. |
-| 💬 **Feedback & Polls** | Encourage open participation and transparent decisions. |
-| 📱 **Responsive UI** | Optimized for mobile and desktop devices. |
+| 🗓️ **Event Management** | Plan and manage events efficiently. |
+| 🛡️ **Verified Profiles** | Ensure authenticity and maintain trust. |
+| 💬 **Feedback & Polls** | Enable open participation and transparent decisions. |
+| 📱 **Responsive UI** | Works seamlessly on mobile and desktop devices. |
 
 ---
 
@@ -69,11 +69,11 @@ It enables members to share updates, organize events, and build trust — all in
 
 | Layer | Technologies |
 |--------|---------------|
-| 🖥️ **Frontend** | React(Vite), TailwindCSS |
+| 🖥️ **Frontend** | Next.js, React, TailwindCSS |
 | ⚙️ **Backend** | Node.js, Express.js |
-| 🗄️ **Database** | Firebase |
+| 🗄️ **Database** | MongoDB |
 | 🚀 **Deployment** | Vercel |
-| 🔐 **Authentication** | JWT, Bcrypt(comming soon) |
+| 🔐 **Authentication** | JWT, Bcrypt |
 
 ---
 
@@ -89,7 +89,7 @@ npm install
 
 # Start the dev server
 npm run dev
-Then visit 👉 http://localhost:3000 to view it live!
+Then open 👉 http://localhost:3000 in your browser!
 
 🧠 Future Enhancements
 🚧 This is just the beginning!
@@ -97,7 +97,7 @@ We plan to add many exciting features soon, including:
 
 💬 Real-Time Chat System using WebSockets
 
-🏘️ Smart Resource Mapping (AI-powered suggestions)
+🏘️ Smart Resource Mapping (AI-powered recommendations)
 
 🔔 Push Notifications for instant updates
 
@@ -105,7 +105,7 @@ We plan to add many exciting features soon, including:
 
 🧾 Admin Dashboard for analytics & management
 
-✨ Our vision is to make Sampark a complete ecosystem for community engagement and collaboration.
+✨ Our mission is to make Sampark a complete ecosystem for community engagement and collaboration.
 
 🕓 Development Journey
 🧩 Built completely from scratch in just 48 hours during the Ignite Hackathon 2025.
@@ -115,14 +115,17 @@ We plan to add many exciting features soon, including:
 “We believe technology should strengthen human connection — not replace it.
 Sampark is our step toward building communities that collaborate, communicate, and care.” 🌱
 
-📬 Contact
-📩 Team Leader: Aatifa Rizvi
-💻 Frontend Lead: Mohit Sharma
-🤝 Collaborators: Aarif Khan, Azhan Ali
-
 🏁 Acknowledgment
 Special thanks to Ignite Hackathon 2025 organizers for providing a platform to innovate, collaborate, and create solutions that matter! ❤️‍🔥
 
 🪄 Note
 💫 This is just the starting phase of Sampark.
 We will keep improving it and adding new features to make it more powerful, scalable, and impactful for real-world communities. 🌍
+
+⭐ If you like our project, don’t forget to star the repo and support our journey! ⭐
+yaml
+Copy code
+
+---
+
+Would you like me to now add **cool badges** (like “🔥 Built in 48 Hours”, “🚀 Hackathon Project”, “💻 
