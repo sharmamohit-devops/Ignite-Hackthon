@@ -45,7 +45,7 @@ We built **Sampark** — a smart community platform that focuses on seamless com
 > *(Adjust this section to match your actual stack if different)*  
 - Frontend: React(vite) + TailwindCSS  
 - Backend: Node.js / Express (or Next.js API routes)  
-- Database: MongoDB / PostgreSQL (deployed or cloud) or Firebase
+- Database: Firebase
 - Deployment: Vercel (frontend),/ Vercel functions (backend)
 
 ---
